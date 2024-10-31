@@ -5,8 +5,8 @@ import { Booking } from './schemas/booking.schema';
 import { Model, Types } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { EmailService } from 'src/email/email.service';
-import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { formatInTimeZone } from 'date-fns-tz';
 
 @Injectable()
 export class BookingService {
@@ -147,8 +147,9 @@ export class BookingService {
 
     const startDate = new Date(createBookingDto.startDate);
 
-    const formattedStartDate = format(
+    const formattedStartDate = formatInTimeZone(
       startDate,
+      'America/Bogota',
       "EEEE, dd 'de' MMMM 'del' yyyy 'a las' hh:mm a",
       { locale: es },
     );
